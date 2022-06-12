@@ -31,7 +31,7 @@ def create_root_ca():
         crypto.X509Extension(b"authorityKeyIdentifier", False, b"keyid:always",
             issuer=cert)
     ])
-    cert.sign(pkey, "sha1")
+    cert.sign(pkey, "sha256")
 
     with open("root.pem", "wb") as certfile:
         certfile.write(crypto.dump_certificate(crypto.FILETYPE_PEM, cert))
@@ -67,7 +67,7 @@ def create_certificate(cn, o, serverside, certfilename, pkeyfilename):
     cert.set_issuer(ca_cert.get_subject())
 
     cert.set_pubkey(pkey)
-    cert.sign(ca_key, "sha1")
+    cert.sign(ca_key, "sha256")
 
 
     with open(certfilename, "wb") as certfile:
